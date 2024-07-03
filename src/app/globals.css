@@ -16,18 +16,23 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer components {
+  .filter-text-negative {
+    /* #f15e6c */
+    filter: invert(53%) sepia(32%) saturate(1657%) hue-rotate(313deg) brightness(94%) contrast(102%);
+  }
+
+  .btn-primary {
+    @apply bg-bg-bright-accent text-text-base-dark;
+  }
+
+  .btn-primary:hover {
+    @apply bg-bg-bright-accent-hover;
   }
 }
