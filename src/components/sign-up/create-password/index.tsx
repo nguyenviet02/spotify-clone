@@ -41,7 +41,7 @@ const CreatePassword = (props: Props) => {
   };
 
   return (
-    <div className='mt-4'>
+    <section className='mt-4'>
       <div className='w-full flex flex-col gap-2'>
         <label htmlFor='password' className='text-sm text-text-base-light font-bold'>
           Mật khẩu
@@ -105,7 +105,7 @@ const CreatePassword = (props: Props) => {
           <span>Tiếp theo</span>
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 

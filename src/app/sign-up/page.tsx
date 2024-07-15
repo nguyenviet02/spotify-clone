@@ -35,7 +35,7 @@ const SignUpPage = (props: Props) => {
       case 1:
         return 'Tạo mật khẩu';
       case 2:
-        return 'Thông tin cá nhân';
+        return 'Giới thiệu thông tin về bản thân bạn';
       case 3:
         return 'Chính sách';
       default:

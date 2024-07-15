@@ -90,7 +90,7 @@
   }
 
   .input-base {
-    @apply text-[1rem] block text-text-base-light font-medium py-3 px-4 w-full rounded bg-bg-base outline-none border-[1px];
+    @apply text-[14px] block text-text-base-light font-medium py-3 px-4 w-full rounded bg-bg-base outline-none border-[1px];
   }
 
   .input-base:focus {
@@ -99,5 +99,18 @@
 
   .icon-sub-to-white {
     @apply filter-color-sub transition-all duration-200 ease-linear;
+  }
+
+  .check-mark {
+    @apply absolute top-1/2 left-0 w-4 h-4 bg-bg-base rounded-full border border-essential-sub transform -translate-y-1/2;
+  }
+
+  .check-mark:hover {
+    @apply border-white;
+  }
+
+  .check-mark::after {
+    content: '';
+    @apply hidden absolute top-1/2 left-1/2 w-2 h-2 bg-bg-press rounded-full transform -translate-x-1/2 -translate-y-1/2;
   }
 }
