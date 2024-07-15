@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { Figtree, Montserrat } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
+import RecoilContextProvider from './recoilContextProvider';
 import './globals.css';
 
 const montserrat = Montserrat({ subsets: ['vietnamese'], weight: ['400', '500', '600', '700', '800', '900'] });
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={montserrat.className}>{children}</body>
+      <body className={montserrat.className}>
+        <RecoilContextProvider>{children}</RecoilContextProvider>
+      </body>
     </html>
   );
 }
