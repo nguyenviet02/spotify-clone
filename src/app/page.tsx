@@ -1,10 +1,11 @@
-import Image from 'next/image';
+'use client';
+
+import Main from '@/components/layout/main';
 
 export default function Home() {
   return (
-    <div>
-      <h1>Spotify</h1>
-      <Image src='/images/Spotify_icon.png' alt='Spotify logo' width={200} height={200} />
-    </div>
+    <Main>
+      <h1 className='text-text-base-light'>Homepage</h1>;
+    </Main>
   );
 }

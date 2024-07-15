@@ -28,11 +28,76 @@
     filter: invert(53%) sepia(32%) saturate(1657%) hue-rotate(313deg) brightness(94%) contrast(102%);
   }
 
+  .filter-white {
+    /* #ffffff */
+    filter: invert(100%) sepia(13%) saturate(2%) hue-rotate(137deg) brightness(106%) contrast(100%);
+  }
+
+  .filter-positive {
+    /* #117a37 */
+    filter: invert(72%) sepia(11%) saturate(6590%) hue-rotate(86deg) brightness(100%) contrast(80%);
+  }
+
+  .filter-link-sub {
+    /* #b3b3b3 */
+    filter: invert(70%) sepia(44%) saturate(0%) hue-rotate(254deg) brightness(94%) contrast(94%);
+  }
+
+  .filter-color-sub {
+    /* #a7a7a7 */
+    filter: invert(74%) sepia(0%) saturate(737%) hue-rotate(182deg) brightness(95%) contrast(77%);
+  }
+
   .btn-primary {
     @apply bg-bg-bright-accent text-text-base-dark;
   }
 
   .btn-primary:hover {
     @apply bg-bg-bright-accent-hover;
+  }
+
+  .btn-secondary {
+    @apply w-fit min-h-8 px-4 py-1 rounded-full bg-bg-white text-text-base-dark cursor-pointer font-bold text-[12px];
+    transition: all 0.03s ease-in-out;
+  }
+
+  .btn-secondary:hover {
+    transform: scale(1.04);
+  }
+
+  /* width */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #8888887e;
+  }
+
+  /* Handle on hover */
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .bg-bottom-linear {
+    background: linear-gradient(90deg, #af2896, #509bf5);
+  }
+
+  .input-base {
+    @apply text-[1rem] block text-text-base-light font-medium py-3 px-4 w-full rounded bg-bg-base outline-none border-[1px];
+  }
+
+  .input-base:focus {
+    @apply border-essential-base;
+  }
+
+  .icon-sub-to-white {
+    @apply filter-color-sub transition-all duration-200 ease-linear;
   }
 }

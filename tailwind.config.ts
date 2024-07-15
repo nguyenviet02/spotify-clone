@@ -10,6 +10,7 @@ const config: Config = {
       },
       colors: {
         'bg-base': '#121212',
+        'bg-white': '#fff',
         'bg-highlight': '#1a1a1a',
         'bg-press': '#000',
         'bg-elevated-base': '#242424',
@@ -21,11 +22,14 @@ const config: Config = {
         'text-base-dark': '#000',
         'text-sub': '#a7a7a7',
         'text-warn': '#ffa42ab',
+        'text-link-sub': '#b3b3b3',
+        'text-positive': '#117a37',
         'text-negative': '#f15e6c',
         'text-bright-accent': '#1ed760',
         'essential-base': '#fff',
         'essential-negative': '#e91429',
-        'essential-sub': '#727272'
+        'essential-sub': '#727272',
+        'essential-bright-accent': '#1ed760'
       },
       width: {
         '324': '81rem'
