@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
 import { stepSignUpState } from '@/lib/recoil/atoms';
@@ -8,6 +8,7 @@ type Props = {};
 const UserInfo = (props: Props) => {
   const [stepSignUp, setStepSignUp] = useRecoilState(stepSignUpState);
   const [hasName, setHasName] = React.useState<boolean>(true);
+  const [isOnThisStep, setIsOnThisStep] = React.useState<boolean>(false);
   const [checkDOB, setCheckDOB] = React.useState({
     hasDay: true,
     hasMonth: true,
@@ -37,9 +38,17 @@ const UserInfo = (props: Props) => {
   const onClickContinue = () => {
     setStepSignUp(stepSignUp + 1);
   };
+
+  useEffect(() => {
+    setIsOnThisStep(stepSignUp === 2);
+    return () => {
+      setIsOnThisStep(false);
+    };
+  }, [stepSignUp]);
+
   return (
-    <section className='mt-4 w-full'>
-      <div className='w-full flex flex-col'>
+    <section className={`mt-4 w-full group ${isOnThisStep ? 'active' : ''}`}>
+      <div className='w-full flex flex-col opacity-0 group-[.active]:opacity-100 duration-300 ease-linear'>
         <label htmlFor='name' className='text-sm text-text-base-light font-bold'>
           Tên
         </label>
@@ -55,7 +64,7 @@ const UserInfo = (props: Props) => {
           </div>
         )}
       </div>
-      <div className='w-full flex flex-col mt-4'>
+      <div className='w-full flex flex-col mt-4 opacity-0 group-[.active]:opacity-100 duration-500 ease-linear delay-100'>
         <label htmlFor='name' className='text-sm text-text-base-light font-bold mb-[2px]'>
           Ngày sinh
         </label>
@@ -121,7 +130,7 @@ const UserInfo = (props: Props) => {
           )}
         </div>
       </div>
-      <div className='w-full flex flex-col mt-4'>
+      <div className='w-full flex flex-col mt-4 opacity-0 group-[.active]:opacity-100 duration-500 ease-linear delay-200'>
         <label htmlFor='name' className='text-sm text-text-base-light font-bold'>
           Giới tính
         </label>
