@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
-import { stepSignUpState } from '@/lib/recoil/atoms';
+import { dataSignUpState, stepSignUpState } from '@/lib/recoil/atoms';
 type Props = {};
 
 const CreatePassword = (props: Props) => {
   const [stepSignUp, setStepSignUp] = useRecoilState(stepSignUpState);
+  const [dataSignUp, setDataSignUp] = useRecoilState(dataSignUpState);
   const [isValidPassword, setIsValidPassword] = React.useState<boolean>(true);
   const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false);
   const [passwordValidation, setPasswordValidation] = React.useState({
@@ -17,7 +18,13 @@ const CreatePassword = (props: Props) => {
     setIsShowPassword(!isShowPassword);
   };
   const onClickContinue = () => {
-    setStepSignUp(stepSignUp + 1);
+    if (!dataSignUp?.password) {
+      setIsValidPassword(false);
+      return;
+    }
+    if (isValidPassword) {
+      setStepSignUp(stepSignUp + 1);
+    }
   };
 
   const checkValidPassword = (password: string) => {
@@ -35,10 +42,21 @@ const CreatePassword = (props: Props) => {
     return hasAlpha && hasNumberOrSpecialCharacter && hasMinLength;
   };
 
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDataSignUp({
+      ...dataSignUp,
+      password: e.target.value
+    });
+  };
+
   const onBlurPassword = (e: React.FocusEvent<HTMLInputElement>) => {
     const password = e.target.value;
     setIsValidPassword(checkValidPassword(password));
   };
+
+  useEffect(() => {
+    dataSignUp?.password && setIsValidPassword(checkValidPassword(dataSignUp?.password));
+  }, [dataSignUp?.password]);
 
   return (
     <section className='mt-4'>
@@ -47,7 +65,17 @@ const CreatePassword = (props: Props) => {
           Mật khẩu
         </label>
         <div className={`input-base flex p-0 pr-3 input-base has-[:focus]:border-essential-base ${isValidPassword ? ' border-essential-sub' : 'border-essential-negative'}`}>
-          <input type={isShowPassword ? 'text' : 'password'} id='password' onChange={(e) => checkValidPassword(e.target.value)} onBlur={(e) => onBlurPassword(e)} className='input-base border-none' />
+          <input
+            type={isShowPassword ? 'text' : 'password'}
+            id='password'
+            value={dataSignUp?.password}
+            onChange={(e) => {
+              onInputChange(e);
+              checkValidPassword(e.target.value);
+            }}
+            onBlur={(e) => onBlurPassword(e)}
+            className='input-base border-none'
+          />
           <button className='group' onClick={togglePassword}>
             <div className='w-6 h-6 relative'>
               <Image

@@ -1,4 +1,4 @@
-import { stepSignUpState } from '@/lib/recoil/atoms';
+import { dataSignUpState, stepSignUpState } from '@/lib/recoil/atoms';
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
@@ -8,19 +8,28 @@ type Props = {};
 
 const Policy = (props: Props) => {
   const [stepSignUp] = useRecoilState(stepSignUpState);
+  const [dataSignUp, setDataSignUp] = useRecoilState(dataSignUpState);
   const [isOnThisStep, setIsOnThisStep] = React.useState<boolean>(false);
   const policies = [
     {
       content: 'Tôi không muốn nhận tin nhắn tiếp thị từ Spotify',
-      value: 'getMarketingMessage'
+      value: 'notGetMarketingMessage'
     },
     {
       content: 'Chia sẻ dữ liệu đăng ký của tôi với các nhà cung cấp nội dung của Spotify cho mục đích tiếp thị.',
       value: 'shareData'
     }
   ];
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDataSignUp({
+      ...dataSignUp,
+      [event.target.value]: event.target.checked
+    });
+  };
+
   const submitForm = () => {
-    console.log('submit form');
+    console.log('☠️ ~ Policy ~ dataSignUp:', dataSignUp);
   };
 
   React.useEffect(() => {
@@ -33,24 +42,34 @@ const Policy = (props: Props) => {
   return (
     <section className={`mt-4 w-full group ${isOnThisStep ? 'active' : 'hello'}`}>
       <FormGroup className='w-full flex flex-col gap-2'>
-        {policies?.map((policy, index) => (
-          <FormControlLabel
-            key={index}
-            className={`flex w-full py-5 pl-5 mx-0 rounded-md bg-bg-tinted-base [&>span]:text-sm [&>span]:font-medium [&>span]:text-text-base-light [&>.MuiTypography-root]:pl-3 pr-4 [&>.MuiButtonBase-root]:p-0 opacity-0 group-[.active]:opacity-100 duration-300 ease-linear ${index === 1 ? 'delay-100' : ''}`}
-            control={
-              <Checkbox
-                value={policy?.value}
-                sx={{
-                  '& .MuiSvgIcon-root': { fontSize: 20 },
-                  '&.Mui-checked': {
-                    color: '#1ed760'
-                  }
-                }}
-              />
-            }
-            label={policy?.content}
-          />
-        ))}
+        {policies?.map((policy, index) => {
+          const checked = dataSignUp?.[policy?.value as keyof typeof dataSignUp] as boolean;
+          return (
+            <FormControlLabel
+              key={index}
+              sx={{
+                '& .MuiTypography-root': {
+                  fontFamily: 'inherit'
+                }
+              }}
+              className={`flex w-full py-5 pl-5 mx-0 rounded-md bg-bg-tinted-base [&>span]:text-sm [&>span]:font-medium [&>span]:text-text-base-light [&>.MuiTypography-root]:pl-3 pr-4 [&>.MuiButtonBase-root]:p-0 opacity-0 group-[.active]:opacity-100 duration-300 ease-linear ${index === 1 ? 'delay-100' : ''}`}
+              control={
+                <Checkbox
+                  value={policy?.value}
+                  checked={checked}
+                  onChange={handleChange}
+                  sx={{
+                    '& .MuiSvgIcon-root': { fontSize: 20 },
+                    '&.Mui-checked': {
+                      color: '#1ed760'
+                    }
+                  }}
+                />
+              }
+              label={policy?.content}
+            />
+          );
+        })}
       </FormGroup>
       <div className='w-full mt-2 flex flex-col gap-2 opacity-0 group-[.active]:opacity-100 duration-300 ease-linear delay-200'>
         <p className='text-[12px] text-text-base-light font-semibold'>

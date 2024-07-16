@@ -3,13 +3,14 @@ import Divider from '@mui/material/Divider';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
-import { stepSignUpState } from '@/lib/recoil/atoms';
+import { stepSignUpState, dataSignUpState, TDataSignUp } from '@/lib/recoil/atoms';
 
 type Props = {};
 
 const StartSignUp = (props: Props) => {
   const [isValidEmail, setIsValidEmail] = React.useState<boolean>(true);
   const [stepSignUp, setStepSignUp] = useRecoilState(stepSignUpState);
+  const [dataSignUp, setDataSignUp] = useRecoilState<TDataSignUp>(dataSignUpState);
   const checkValidEmail = (email: string) => {
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return regex.test(email);
@@ -29,7 +30,19 @@ const StartSignUp = (props: Props) => {
     }
   ];
   const onClickContinue = () => {
-    setStepSignUp(1);
+    if (!dataSignUp?.email) {
+      setIsValidEmail(false);
+      return;
+    }
+    if (isValidEmail) {
+      setStepSignUp(stepSignUp + 1);
+    }
+  };
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDataSignUp({
+      ...dataSignUp,
+      email: e.target.value
+    });
   };
   return (
     <div className='w-full h-full'>
@@ -45,6 +58,8 @@ const StartSignUp = (props: Props) => {
             type='email'
             id='email'
             placeholder='name@domain.com'
+            value={dataSignUp?.email}
+            onChange={onInputChange}
             onBlur={(e) => setIsValidEmail(checkValidEmail(e.target.value))}
           />
         </div>
