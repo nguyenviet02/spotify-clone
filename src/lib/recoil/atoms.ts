@@ -10,7 +10,7 @@ export type TDataSignUp = {
   year: string;
   gender: string;
   notGetMarketingMessage: boolean;
-  notShareData: boolean;
+  shareData: boolean;
 };
 
 const defaultDataSignUp: TDataSignUp = {
@@ -23,7 +23,7 @@ const defaultDataSignUp: TDataSignUp = {
   year: '',
   gender: 'male',
   notGetMarketingMessage: false,
-  notShareData: false
+  shareData: false
 };
 
 export const stepSignUpState = atom({
