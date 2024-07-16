@@ -37,7 +37,7 @@ const SignUpPage = (props: Props) => {
       case 2:
         return 'Giới thiệu thông tin về bản thân bạn';
       case 3:
-        return 'Chính sách';
+        return 'Điều khoản & Điều kiện';
       default:
         return 'Đăng ký để bắt đầu nghe';
     }

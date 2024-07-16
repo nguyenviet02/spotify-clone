@@ -18,6 +18,7 @@ const config: Config = {
         'bg-elevated-press': '#000',
         'bg-bright-accent': '#1ed760',
         'bg-bright-accent-hover': '#1fdf64',
+        'bg-tinted-base': '#232323',
         'text-base-light': '#fff',
         'text-base-dark': '#000',
         'text-sub': '#a7a7a7',
