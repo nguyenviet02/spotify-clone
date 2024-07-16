@@ -77,8 +77,8 @@ const UserInfo = (props: Props) => {
             onBlur={(e) => checkHasDay(e.target.value)}
             className={`input-base mt-2 w-[30%] ${checkDOB?.hasDay ? ' border-essential-sub' : 'border-essential-negative'}`}
           />
-          <select id='date' onBlur={(e) => checkHasMonth(e.target.value)} className={`input-base mt-2 ${checkDOB?.hasMonth ? ' border-essential-sub' : 'border-essential-negative'}`}>
-            <option value='' selected disabled>
+          <select defaultValue='' id='date' onBlur={(e) => checkHasMonth(e.target.value)} className={`input-base mt-2 ${checkDOB?.hasMonth ? ' border-essential-sub' : 'border-essential-negative'}`}>
+            <option value='' disabled>
               Tháng
             </option>
             <option value='1'>Tháng 1</option>
