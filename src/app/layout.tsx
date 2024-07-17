@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import RecoilContextProvider from './recoilContextProvider';
+import ApolloProviderWrapper from './apolloProvider';
 import './globals.css';
 
 const montserrat = Montserrat({ subsets: ['vietnamese'], weight: ['400', '500', '600', '700', '800', '900'] });
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={montserrat.className}>
-        <RecoilContextProvider>{children}</RecoilContextProvider>
+        <ApolloProviderWrapper>
+          <RecoilContextProvider>{children}</RecoilContextProvider>
+        </ApolloProviderWrapper>
       </body>
     </html>
   );

@@ -1,0 +1,54 @@
+overwrite: true
+schema: 'src/lib/graphql/schema.graphql'
+documents: 'src/lib/graphql/operations/*.graphql'
+generates:
+  src/lib/graphql/generated/types.ts:
+    config:
+      onlyOperationTypes: false # Must be false if not it will ignore query type & response
+      useTypeImports: true
+    plugins:
+      - add:
+          content: >
+            /* eslint-disable */
+            
+            /**
+             * WARNING: THIS FILE IS AUTO-GENERATED, DO NOT EDIT IT DIRECTLY!
+             */
+
+
+      - 'typescript'
+
+  src/lib/graphql/operations:
+    preset: 'near-operation-file'
+    presetConfig:
+      extension: '.generated.tsx'
+      baseTypesPath: '../generated/types.ts'
+      folder: '../generated'
+    config:
+      useTypeImports: true
+      dedupeOperationSuffix: true
+    plugins:
+      - add:
+          content: >
+            /* eslint-disable */
+            
+            /**
+             * WARNING: THIS FILE IS AUTO-GENERATED, DO NOT EDIT IT DIRECTLY!
+             */
+
+
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+
+  src/lib/graphql/graphql.tsx:
+    plugins:
+      - add:
+          content: >
+            /* eslint-disable */
+            
+            /**
+             * WARNING: THIS FILE IS AUTO-GENERATED, DO NOT EDIT IT DIRECTLY!
+             */
+
+
+      - src/lib/graphql/plugins/graphql-exporter.js

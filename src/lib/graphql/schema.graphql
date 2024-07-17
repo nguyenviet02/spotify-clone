@@ -1,0 +1,51 @@
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
+scalar Date
+
+type User {
+  _id: ID!
+  name: String!
+  email: String!
+  password: String
+  dateOfBirth: Date
+  gender: Gender!
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHERS
+  SECRET
+}
+
+type Query {
+  me: User
+  user(_id: ID!): User
+  users: [User]
+}
+
+type UserAuth {
+  token: String
+  refreshToken: String
+}
+
+input UserInput {
+  name: String!
+  email: String!
+  password: String!
+  dateOfBirth: Date!
+  gender: Gender!
+}
+
+input UserLoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  register(input: UserInput): UserAuth
+  login(input: UserLoginInput): UserAuth
+}

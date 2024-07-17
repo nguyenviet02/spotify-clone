@@ -8,12 +8,15 @@
     "start": "next start",
     "lint": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx ./src",
     "lint-staged": "lint-staged",
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'"
+    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'",
+    "codegen": "graphql-codegen --config codegen.yaml"
   },
   "dependencies": {
+    "@apollo/client": "^3.10.8",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.21",
+    "dotenv": "^16.4.5",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
@@ -21,6 +24,11 @@
     "recoil": "^0.7.7"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/near-operation-file-preset": "^3.0.0",
+    "@graphql-codegen/typescript": "^4.0.9",
+    "@graphql-codegen/typescript-operations": "^4.2.3",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -31,7 +39,7 @@
     "postcss": "^8",
     "prettier": "^3.3.2",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5.5.3"
   },
   "lint-staged": {
     "*.{js, jsx,ts,tsx}": [
