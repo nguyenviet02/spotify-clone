@@ -3,12 +3,24 @@ import Image from 'next/image';
 import { useRecoilState } from 'recoil';
 import { dataSignUpState, stepSignUpState } from '@/lib/recoil/atoms';
 import { colors, FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { Gender } from '@/lib/graphql/graphql';
 
 type Props = {};
+
+//* Sửa lại việc lấy dữ liệu ngày thangs năm sinh
+
+export type TDoB = {
+  day: string;
+  month: string;
+  year: string;
+};
 
 const UserInfo = (props: Props) => {
   const [stepSignUp, setStepSignUp] = useRecoilState(stepSignUpState);
   const [dataSignUp, setDataSignUp] = useRecoilState(dataSignUpState);
+  const dayInputRef = React.useRef<HTMLInputElement>(null);
+  const monthInputRef = React.useRef<HTMLSelectElement>(null);
+  const yearInputRef = React.useRef<HTMLInputElement>(null);
   const [hasName, setHasName] = React.useState<boolean>(true);
   const [isOnThisStep, setIsOnThisStep] = React.useState<boolean>(false);
   const [checkDOB, setCheckDOB] = React.useState({
@@ -19,19 +31,22 @@ const UserInfo = (props: Props) => {
   const checkHasName = (name: string) => {
     setHasName(name.length > 0);
   };
-  const checkHasDay = (day: string) => {
+  const checkHasDay = () => {
+    const day = dayInputRef.current?.value;
     setCheckDOB({
       ...checkDOB,
       hasDay: Number(day) > 0 && Number(day) < 32
     });
   };
-  const checkHasMonth = (month: string) => {
+  const checkHasMonth = () => {
+    const month = monthInputRef.current?.value || '';
     setCheckDOB({
       ...checkDOB,
-      hasMonth: month.length > 0
+      hasMonth: month?.length > 0
     });
   };
-  const checkHasYear = (year: string) => {
+  const checkHasYear = () => {
+    const year = yearInputRef.current?.value;
     setCheckDOB({
       ...checkDOB,
       hasYear: Number(year) > 1900 && Number(year) < new Date().getFullYear()
@@ -45,29 +60,8 @@ const UserInfo = (props: Props) => {
     });
   };
 
-  const onInputDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDataSignUp({
-      ...dataSignUp,
-      day: e.target.value
-    });
-  };
-
-  const onInputMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setDataSignUp({
-      ...dataSignUp,
-      month: e.target.value
-    });
-  };
-
-  const onInputYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDataSignUp({
-      ...dataSignUp,
-      year: e.target.value
-    });
-  };
-
   const handleChangeGender = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const gender = (event.target as HTMLInputElement).value;
+    const gender = (event.target as HTMLInputElement).value as Gender;
     setDataSignUp({
       ...dataSignUp,
       gender
@@ -102,20 +96,43 @@ const UserInfo = (props: Props) => {
   };
 
   const onClickContinue = () => {
+    // Kiểm tra tên => ngày sinh => tháng + năm sinh
     if (!dataSignUp?.displayName) {
       setHasName(false);
       return;
     }
-    if (!dataSignUp?.day || !dataSignUp?.month || !dataSignUp?.year) {
-      setCheckDOB({
-        hasDay: dataSignUp?.day.length > 0,
-        hasMonth: dataSignUp?.month.length > 0,
-        hasYear: dataSignUp?.year.length > 0
-      });
+    const day = dayInputRef.current?.value;
+    const month = monthInputRef.current?.value;
+    const year = yearInputRef.current?.value;
+    if (!day) {
+      setCheckDOB({ ...checkDOB, hasDay: false });
       return;
     }
+    if (!month || !year) {
+      setCheckDOB({ ...checkDOB, hasMonth: !!month, hasYear: !!year });
+      return;
+    }
+    const dateString = `${year}-${month}-${day}`;
+    const date = new Date(dateString);
+    setDataSignUp({
+      ...dataSignUp,
+      dateOfBirth: date
+    });
     setStepSignUp(stepSignUp + 1);
   };
+
+  useEffect(() => {
+    if (!dataSignUp?.dateOfBirth) {
+      return;
+    }
+    const date = new Date(dataSignUp?.dateOfBirth);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    !!dayInputRef?.current && (dayInputRef.current.value = day.toString());
+    !!monthInputRef?.current && (monthInputRef.current.value = month.toString());
+    !!yearInputRef?.current && (yearInputRef.current.value = year.toString());
+  }, [dataSignUp?.dateOfBirth]);
 
   useEffect(() => {
     setIsOnThisStep(stepSignUp === 2);
@@ -159,17 +176,11 @@ const UserInfo = (props: Props) => {
             type='text'
             id='day'
             placeholder='dd'
-            value={dataSignUp?.day}
-            onBlur={(e) => checkHasDay(e.target.value)}
-            onChange={onInputDayChange}
+            ref={dayInputRef}
+            onBlur={checkHasDay}
             className={`input-base mt-2 w-[30%] ${checkDOB?.hasDay ? ' border-essential-sub' : 'border-essential-negative'}`}
           />
-          <select
-            value={dataSignUp?.month}
-            onChange={onInputMonthChange}
-            onBlur={(e) => checkHasMonth(e.target.value)}
-            className={`input-base mt-2 ${checkDOB?.hasMonth ? ' border-essential-sub' : 'border-essential-negative'}`}
-          >
+          <select ref={monthInputRef} defaultValue='' onBlur={checkHasMonth} className={`input-base mt-2 ${checkDOB?.hasMonth ? ' border-essential-sub' : 'border-essential-negative'}`}>
             <option value='' disabled>
               Tháng
             </option>
@@ -187,11 +198,10 @@ const UserInfo = (props: Props) => {
             <option value='12'>Tháng 12</option>
           </select>
           <input
+            ref={yearInputRef}
             type='text'
             placeholder='yyyy'
-            value={dataSignUp?.year}
-            onChange={onInputYearChange}
-            onBlur={(e) => checkHasYear(e.target.value)}
+            onBlur={checkHasYear}
             className={`input-base mt-2 w-[50%] ${checkDOB?.hasYear ? ' border-essential-sub' : 'border-essential-negative'}`}
           />
         </div>
@@ -237,12 +247,12 @@ const UserInfo = (props: Props) => {
               name='radio-buttons-group'
             >
               <div className='flex flex-row gap-8'>
-                <FormControlLabel value='male' sx={radioTextStyle} control={<Radio size='small' sx={radioButtonStyle} />} label='Nam' />
-                <FormControlLabel value='female' sx={radioTextStyle} control={<Radio size='small' sx={radioButtonStyle} />} label='Nữ' />
+                <FormControlLabel value={Gender.Male} sx={radioTextStyle} control={<Radio size='small' sx={radioButtonStyle} />} label='Nam' />
+                <FormControlLabel value={Gender.Female} sx={radioTextStyle} control={<Radio size='small' sx={radioButtonStyle} />} label='Nữ' />
               </div>
-              <FormControlLabel value='no' sx={radioTextStyle} control={<Radio size='small' sx={radioButtonStyle} />} label='Không phân biệt giới tính' />
-              <FormControlLabel value='other' sx={radioTextStyle} control={<Radio size='small' sx={radioButtonStyle} />} label='Giới tính khác' />
-              <FormControlLabel value='secret' sx={radioTextStyle} control={<Radio size='small' sx={radioButtonStyle} />} label='Không muốn nêu cụ thể' />
+              <FormControlLabel value={Gender.NoGender} sx={radioTextStyle} control={<Radio size='small' sx={radioButtonStyle} />} label='Không phân biệt giới tính' />
+              <FormControlLabel value={Gender.Others} sx={radioTextStyle} control={<Radio size='small' sx={radioButtonStyle} />} label='Giới tính khác' />
+              <FormControlLabel value={Gender.Secret} sx={radioTextStyle} control={<Radio size='small' sx={radioButtonStyle} />} label='Không muốn nêu cụ thể' />
             </RadioGroup>
           </div>
           {/* Error message */}

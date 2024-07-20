@@ -1,14 +1,13 @@
 import { atom } from 'recoil';
+import { Gender } from '../graphql/generated/types';
 
 export type TDataSignUp = {
+  displayName: string;
   email: string;
   phone: string;
   password: string;
-  displayName: string;
-  day: string;
-  month: string;
-  year: string;
-  gender: string;
+  dateOfBirth: Date | null;
+  gender: Gender;
   notGetMarketingMessage: boolean;
   shareData: boolean;
 };
@@ -18,10 +17,8 @@ const defaultDataSignUp: TDataSignUp = {
   phone: '',
   password: '',
   displayName: '',
-  day: '',
-  month: '',
-  year: '',
-  gender: 'male',
+  dateOfBirth: null,
+  gender: Gender.Male,
   notGetMarketingMessage: false,
   shareData: false
 };

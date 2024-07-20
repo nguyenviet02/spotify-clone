@@ -4,14 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { stepSignUpState, dataSignUpState, TDataSignUp } from '@/lib/recoil/atoms';
-import { useUsersLazyQuery } from '@/lib/graphql/graphql';
 
 type Props = {};
 
 const StartSignUp = (props: Props) => {
-  const [getUsers, users] = useUsersLazyQuery();
-  console.log('☠️ ~ StartSignUp ~ users:', users);
-
   const [isValidEmail, setIsValidEmail] = React.useState<boolean>(true);
   const [stepSignUp, setStepSignUp] = useRecoilState(stepSignUpState);
   const [dataSignUp, setDataSignUp] = useRecoilState<TDataSignUp>(dataSignUpState);
@@ -48,10 +44,6 @@ const StartSignUp = (props: Props) => {
       email: e.target.value
     });
   };
-
-  useEffect(() => {
-    getUsers();
-  }, []);
 
   return (
     <div className='w-full h-full'>
