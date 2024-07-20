@@ -4,7 +4,7 @@ import { Gender } from '../graphql/generated/types';
 export type TDataSignUp = {
   displayName: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   password: string;
   dateOfBirth: Date | null;
   gender: Gender;
@@ -14,7 +14,7 @@ export type TDataSignUp = {
 
 const defaultDataSignUp: TDataSignUp = {
   email: '',
-  phone: '',
+  phoneNumber: '',
   password: '',
   displayName: '',
   dateOfBirth: null,

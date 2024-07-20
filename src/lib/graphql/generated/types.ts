@@ -23,6 +23,7 @@ export type Scalars = {
 export enum Gender {
   Female = 'FEMALE',
   Male = 'MALE',
+  NoGender = 'NO_GENDER',
   Others = 'OTHERS',
   Secret = 'SECRET'
 }
@@ -38,7 +39,7 @@ export type MutationLoginArgs = {
 };
 
 export type MutationRegisterArgs = {
-  input?: InputMaybe<UserInput>;
+  input?: InputMaybe<UserRegisterInput>;
 };
 
 export type Query = {
@@ -55,11 +56,16 @@ export type QueryUserArgs = {
 export type User = {
   __typename?: 'User';
   _id: Scalars['ID']['output'];
-  dateOfBirth?: Maybe<Scalars['Date']['output']>;
-  email: Scalars['String']['output'];
+  dateOfBirth: Scalars['Date']['output'];
+  displayName: Scalars['String']['output'];
+  email?: Maybe<Scalars['String']['output']>;
   gender: Gender;
-  name: Scalars['String']['output'];
-  password?: Maybe<Scalars['String']['output']>;
+  likedSongs?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
+  notGetMarketingMessage?: Maybe<Scalars['Boolean']['output']>;
+  password: Scalars['String']['output'];
+  phoneNumber?: Maybe<Scalars['String']['output']>;
+  playlists?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
+  shareData?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type UserAuth = {
@@ -68,15 +74,18 @@ export type UserAuth = {
   token?: Maybe<Scalars['String']['output']>;
 };
 
-export type UserInput = {
-  dateOfBirth: Scalars['Date']['input'];
-  email: Scalars['String']['input'];
-  gender: Gender;
-  name: Scalars['String']['input'];
-  password: Scalars['String']['input'];
-};
-
 export type UserLoginInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
+};
+
+export type UserRegisterInput = {
+  dateOfBirth: Scalars['Date']['input'];
+  displayName: Scalars['String']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
+  gender: Gender;
+  notGetMarketingMessage?: InputMaybe<Scalars['Boolean']['input']>;
+  password: Scalars['String']['input'];
+  phoneNumber?: InputMaybe<Scalars['String']['input']>;
+  shareData?: InputMaybe<Scalars['Boolean']['input']>;
 };

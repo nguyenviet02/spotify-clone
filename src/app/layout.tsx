@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import RecoilContextProvider from './recoilContextProvider';
 import ApolloProviderWrapper from './apolloProvider';
+import SnackbarProviderWrapper from './snackbarProvider';
 import './globals.css';
 
 const montserrat = Montserrat({ subsets: ['vietnamese'], weight: ['400', '500', '600', '700', '800', '900'] });
@@ -20,7 +21,9 @@ export default function RootLayout({
     <html lang='en'>
       <body className={montserrat.className}>
         <ApolloProviderWrapper>
-          <RecoilContextProvider>{children}</RecoilContextProvider>
+          <RecoilContextProvider>
+            <SnackbarProviderWrapper>{children}</SnackbarProviderWrapper>
+          </RecoilContextProvider>
         </ApolloProviderWrapper>
       </body>
     </html>

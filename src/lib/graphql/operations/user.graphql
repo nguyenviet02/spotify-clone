@@ -1,6 +1,20 @@
+query Query {
+  me {
+    _id
+    displayName
+  }
+}
+
 query Users {
   users {
     _id
-    name
+    displayName
+  }
+}
+
+mutation User_register($input: UserRegisterInput) {
+  register(input: $input) {
+    refreshToken
+    token
   }
 }

@@ -1,15 +1,20 @@
+import { useUser_RegisterMutation } from '@/lib/graphql/graphql';
 import { dataSignUpState, stepSignUpState } from '@/lib/recoil/atoms';
+import { showError, showSuccess } from '@/utils/utils';
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 
 type Props = {};
 
 const Policy = (props: Props) => {
+  const router = useRouter();
   const [stepSignUp] = useRecoilState(stepSignUpState);
   const [dataSignUp, setDataSignUp] = useRecoilState(dataSignUpState);
   const [isOnThisStep, setIsOnThisStep] = React.useState<boolean>(false);
+  const [registerUserMutation] = useUser_RegisterMutation();
   const policies = [
     {
       content: 'Tôi không muốn nhận tin nhắn tiếp thị từ Spotify',
@@ -28,8 +33,21 @@ const Policy = (props: Props) => {
     });
   };
 
-  const submitForm = () => {
+  const submitForm = async () => {
     console.log('☠️ ~ Policy ~ dataSignUp:', dataSignUp);
+    try {
+      const res = await registerUserMutation({
+        variables: {
+          input: dataSignUp
+        }
+      });
+      if (res?.data) {
+        showSuccess('Đăng ký thành công!');
+        router.push('/sign-in');
+      }
+    } catch (error: any) {
+      showError('Đăng ký thất bại. Lý do: ' + error.message);
+    }
   };
 
   React.useEffect(() => {

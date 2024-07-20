@@ -7,16 +7,22 @@ scalar Date
 
 type User {
   _id: ID!
-  name: String!
-  email: String!
-  password: String
-  dateOfBirth: Date
+  displayName: String!
+  email: String
+  phoneNumber: String
+  password: String!
+  dateOfBirth: Date!
   gender: Gender!
+  playlists: [ID]
+  likedSongs: [ID]
+  notGetMarketingMessage: Boolean
+  shareData: Boolean
 }
 
 enum Gender {
   MALE
   FEMALE
+  NO_GENDER
   OTHERS
   SECRET
 }
@@ -32,12 +38,15 @@ type UserAuth {
   refreshToken: String
 }
 
-input UserInput {
-  name: String!
-  email: String!
+input UserRegisterInput {
+  displayName: String!
+  email: String
+  phoneNumber: String
   password: String!
   dateOfBirth: Date!
   gender: Gender!
+  notGetMarketingMessage: Boolean
+  shareData: Boolean
 }
 
 input UserLoginInput {
@@ -46,6 +55,6 @@ input UserLoginInput {
 }
 
 type Mutation {
-  register(input: UserInput): UserAuth
+  register(input: UserRegisterInput): UserAuth
   login(input: UserLoginInput): UserAuth
 }
