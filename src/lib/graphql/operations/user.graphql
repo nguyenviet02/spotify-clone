@@ -1,19 +1,28 @@
-query Query {
-  me {
+query me {
+  user_me {
     _id
     displayName
-  }
-}
-
-query Users {
-  users {
-    _id
-    displayName
+    email
+    phoneNumber
+    password
+    dateOfBirth
+    gender
+    playlists
+    likedSongs
+    notGetMarketingMessage
+    shareData
   }
 }
 
 mutation User_register($input: UserRegisterInput) {
-  register(input: $input) {
+  user_register(input: $input) {
+    refreshToken
+    token
+  }
+}
+
+mutation User_login($input: UserLoginInput) {
+  user_login(input: $input) {
     refreshToken
     token
   }

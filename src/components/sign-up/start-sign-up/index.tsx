@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { stepSignUpState, dataSignUpState, TDataSignUp } from '@/lib/recoil/atoms';
+import { OtherLoginMethod } from '@/components/common';
 
 type Props = {};
 
@@ -15,20 +16,6 @@ const StartSignUp = (props: Props) => {
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return regex.test(email);
   };
-  const otherLoginMethods = [
-    {
-      iconPath: '/icons/google-icon.svg',
-      text: 'Đăng ký bằng Google'
-    },
-    {
-      iconPath: '/icons/facebook-icon.svg',
-      text: 'Đăng ký bằng Facebook'
-    },
-    {
-      iconPath: '/icons/apple-icon.svg',
-      text: 'Đăng ký bằng Apple'
-    }
-  ];
   const onClickContinue = () => {
     if (!dataSignUp?.email) {
       setIsValidEmail(false);
@@ -84,15 +71,8 @@ const StartSignUp = (props: Props) => {
       </button>
       <Divider className='w-full before:border-t-essential-sub after:border-t-essential-sub text-text-base-light text-[12px] font-medium mt-8'>hoặc</Divider>
       {/* Other login method */}
-      <div className='w-full mt-8 [&>*:nth-child(n+2)]:mt-2 '>
-        {otherLoginMethods?.map((method, index) => (
-          <button key={index} className='w-full h-12 flex justify-center items-center relative py-[7px] pl-[51px] pr-[31px] border border-essential-sub hover:border-essential-base rounded-full '>
-            <div className='w-6 h-6 absolute left-5'>
-              <Image src={method.iconPath} alt='SPOTIFY_ICON' fill />
-            </div>
-            <p className='text-[14px] font-bold text-text-base-light'>{method.text}</p>
-          </button>
-        ))}
+      <div className='mt-8'>
+        <OtherLoginMethod page='sign-up' />
       </div>
       <Divider className='w-full mt-8 border-t-[1px] border-t-essential-sub' />
       <div className='mt-8 text-center w-full'>

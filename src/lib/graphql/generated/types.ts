@@ -30,26 +30,26 @@ export enum Gender {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  login?: Maybe<UserAuth>;
-  register?: Maybe<UserAuth>;
+  user_login?: Maybe<UserAuth>;
+  user_register?: Maybe<UserAuth>;
 };
 
-export type MutationLoginArgs = {
+export type MutationUser_LoginArgs = {
   input?: InputMaybe<UserLoginInput>;
 };
 
-export type MutationRegisterArgs = {
+export type MutationUser_RegisterArgs = {
   input?: InputMaybe<UserRegisterInput>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  me?: Maybe<User>;
-  user?: Maybe<User>;
-  users?: Maybe<Array<Maybe<User>>>;
+  user_getUserById?: Maybe<User>;
+  user_getUsers?: Maybe<Array<Maybe<User>>>;
+  user_me?: Maybe<User>;
 };
 
-export type QueryUserArgs = {
+export type QueryUser_GetUserByIdArgs = {
   _id: Scalars['ID']['input'];
 };
 
@@ -61,11 +61,11 @@ export type User = {
   email?: Maybe<Scalars['String']['output']>;
   gender: Gender;
   likedSongs?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
-  notGetMarketingMessage?: Maybe<Scalars['Boolean']['output']>;
+  notGetMarketingMessage: Scalars['Boolean']['output'];
   password: Scalars['String']['output'];
   phoneNumber?: Maybe<Scalars['String']['output']>;
   playlists?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
-  shareData?: Maybe<Scalars['Boolean']['output']>;
+  shareData: Scalars['Boolean']['output'];
 };
 
 export type UserAuth = {
@@ -84,8 +84,8 @@ export type UserRegisterInput = {
   displayName: Scalars['String']['input'];
   email?: InputMaybe<Scalars['String']['input']>;
   gender: Gender;
-  notGetMarketingMessage?: InputMaybe<Scalars['Boolean']['input']>;
+  notGetMarketingMessage: Scalars['Boolean']['input'];
   password: Scalars['String']['input'];
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
-  shareData?: InputMaybe<Scalars['Boolean']['input']>;
+  shareData: Scalars['Boolean']['input'];
 };

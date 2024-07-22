@@ -15,8 +15,8 @@ type User {
   gender: Gender!
   playlists: [ID]
   likedSongs: [ID]
-  notGetMarketingMessage: Boolean
-  shareData: Boolean
+  notGetMarketingMessage: Boolean!
+  shareData: Boolean!
 }
 
 enum Gender {
@@ -28,9 +28,9 @@ enum Gender {
 }
 
 type Query {
-  me: User
-  user(_id: ID!): User
-  users: [User]
+  user_me: User
+  user_getUserById(_id: ID!): User
+  user_getUsers: [User]
 }
 
 type UserAuth {
@@ -45,8 +45,8 @@ input UserRegisterInput {
   password: String!
   dateOfBirth: Date!
   gender: Gender!
-  notGetMarketingMessage: Boolean
-  shareData: Boolean
+  notGetMarketingMessage: Boolean!
+  shareData: Boolean!
 }
 
 input UserLoginInput {
@@ -55,6 +55,6 @@ input UserLoginInput {
 }
 
 type Mutation {
-  register(input: UserRegisterInput): UserAuth
-  login(input: UserLoginInput): UserAuth
+  user_register(input: UserRegisterInput): UserAuth
+  user_login(input: UserLoginInput): UserAuth
 }
