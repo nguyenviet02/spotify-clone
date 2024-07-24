@@ -77,6 +77,28 @@ const StartSignUp = (props: Props) => {
     await checkExistUser();
   };
 
+  const dividerWithContentStyle = {
+    marginBlock: '2rem',
+    width: '100%',
+    fontWeight: '500',
+    color: '#fff',
+    fontSize: '12px',
+
+    '&::before': {
+      borderTop: '1px solid #727272'
+    },
+
+    '&::after': {
+      borderTop: '1px solid #727272'
+    }
+  };
+
+  const dividerStyle = {
+    marginBlock: '2rem',
+    borderTop: '1px solid #727272',
+    width: '100%'
+  };
+
   useEffect(() => {
     setIsCallApi(true);
   }, [stepSignUp]);
@@ -117,12 +139,12 @@ const StartSignUp = (props: Props) => {
         <LoadingIcon width={4} height={4} isLoading={checkExistUserEffect?.loading} />
         <span>{checkExistUserEffect?.loading ? 'Đang kiểm tra email...' : 'Tiếp tục'}</span>
       </button>
-      <Divider className='w-full before:border-t-essential-sub after:border-t-essential-sub text-text-base-light text-[12px] font-medium mt-8'>hoặc</Divider>
+      <Divider sx={dividerWithContentStyle}>hoặc</Divider>
       {/* Other login method */}
       <div className='mt-8'>
         <OtherLoginMethod page='sign-up' />
       </div>
-      <Divider className='w-full mt-8 border-t-[1px] border-t-essential-sub' />
+      <Divider sx={dividerStyle} />
       <div className='mt-8 text-center w-full'>
         <span className='text-[14px] font-medium text-text-sub'>Bạn đã có tài khoản?</span>
         <Link className='text-[14px] font-medium text-text-base-light underline ml-1' href='/login'>

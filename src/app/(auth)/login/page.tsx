@@ -1,12 +1,11 @@
 'use client';
 
 import React from 'react';
+import { AntSwitch, OtherLoginMethod } from '@/components/common';
 import Image from 'next/image';
 import Link from 'next/link';
-import { AntSwitch, OtherLoginMethod } from '@/components/common';
-import { Divider, FormControlLabel, FormGroup, Switch } from '@mui/material';
+import { Divider, FormControlLabel, FormGroup } from '@mui/material';
 import { useUser_LoginMutation } from '@/lib/graphql/graphql';
-import { enqueueSnackbar } from 'notistack';
 import { useRouter } from 'next/navigation';
 import { showSuccess } from '@/utils/utils';
 
@@ -58,6 +57,11 @@ const LoginPage = (props: Props) => {
       setIsValidAuth(false);
     }
   };
+  const dividerStyle = {
+    marginBlock: '2rem',
+    borderTop: '1px solid #727272',
+    width: '80%'
+  };
   return (
     <section className='size-full text-text-base-light'>
       <div className='size-full min-h-screen bg-for-login md:p-8 flex justify-center '>
@@ -84,7 +88,7 @@ const LoginPage = (props: Props) => {
             <div className='md:w-[324px] w-full'>
               <OtherLoginMethod page='login' />
             </div>
-            <Divider className='md:w-[534px] w-[80%] my-8 border-t-[1px] border-t-essential-sub' />
+            <Divider sx={dividerStyle} className='md:w-[534px]' />
             {/* Login Form */}
             <div className='md:w-[324px] w-full'>
               <form action='#' onSubmit={login} className='w-full'>
@@ -143,7 +147,7 @@ const LoginPage = (props: Props) => {
                 </div>
               </form>
             </div>
-            <Divider className='md:w-[534px] w-[80%] my-8 border-t-[1px] border-t-essential-sub' />
+            <Divider sx={dividerStyle} className='md:w-[534px]' />
             <div className='w-full py-4'>
               <h2 className='w-full py-4 text-center text-sm font-medium'>
                 <span className='text-text-sub'>Bạn chưa có tài khoản?</span>
