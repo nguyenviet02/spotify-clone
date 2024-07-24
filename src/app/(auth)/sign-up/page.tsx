@@ -49,7 +49,9 @@ const SignUpPage = (props: Props) => {
       {/* Header */}
       <header className='w-full mt-8 mb-6 flex justify-center'>
         <div className='w-10 h-10 relative'>
-          <Image src='/images/spotify-icon.png' alt='Spotify logo' fill sizes='auto' />
+          <Link href='/'>
+            <Image src='/images/spotify-icon.png' alt='Spotify logo' fill sizes='auto' />
+          </Link>
         </div>
       </header>
       {/* Body */}

@@ -70,7 +70,9 @@ const LoginPage = (props: Props) => {
             {/* Logo */}
             <div className='w-full flex justify-center pt-8 pb-6'>
               <div className='size-9 relative'>
-                <Image src='/images/spotify-icon.png' alt='SPOTIFY_IMAGE' fill sizes='auto'></Image>
+                <Link href='/'>
+                  <Image src='/images/spotify-icon.png' alt='SPOTIFY_IMAGE' fill sizes='auto'></Image>
+                </Link>
               </div>
             </div>
             {/* Title */}
