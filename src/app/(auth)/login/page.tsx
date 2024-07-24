@@ -8,6 +8,7 @@ import { Divider, FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { useUser_LoginMutation } from '@/lib/graphql/graphql';
 import { enqueueSnackbar } from 'notistack';
 import { useRouter } from 'next/navigation';
+import { showSuccess } from '@/utils/utils';
 
 type Props = {};
 
@@ -48,7 +49,7 @@ const LoginPage = (props: Props) => {
         }
       });
       if (res?.data) {
-        enqueueSnackbar('Đăng nhập thành công', { variant: 'success' });
+        showSuccess('Đăng nhập thành công');
         localStorage.setItem('token', res?.data?.user_login?.token || '');
         localStorage.setItem('refreshToken', res?.data?.user_login?.refreshToken || '');
         router.push('/');

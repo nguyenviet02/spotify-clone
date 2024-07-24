@@ -9,6 +9,7 @@ import { useUser_CheckExistUserMutation } from '@/lib/graphql/graphql';
 import ErrorMessage from '@/components/common/error-message';
 import { enqueueSnackbar } from 'notistack';
 import LoadingIcon from '@/components/common/loading';
+import { showError } from '@/utils/utils';
 
 type Props = {};
 
@@ -34,7 +35,7 @@ const StartSignUp = (props: Props) => {
         setIsCallApi(true);
       }
     } catch (error) {
-      enqueueSnackbar('Đã có lỗi xảy ra, vui lòng thử lại sau!', { variant: 'error' });
+      showError('Đã có lỗi xảy ra, vui lòng thử lại sau');
       setIsValidEmail(false);
       setIsUserExist(true);
     }
