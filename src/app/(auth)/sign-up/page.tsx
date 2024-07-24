@@ -45,7 +45,7 @@ const SignUpPage = (props: Props) => {
   };
 
   return (
-    <main className='w-full h-fit min-h-screen flex flex-col justify-center  items-center bg-bg-base'>
+    <section className='size-full flex flex-col justify-center  items-center bg-bg-base'>
       {/* Header */}
       <header className='w-full mt-8 mb-6 flex justify-center'>
         <div className='w-10 h-10 relative'>
@@ -79,17 +79,7 @@ const SignUpPage = (props: Props) => {
           {renderComponentForEachStep()}
         </div>
       </section>
-      {/* Footer */}
-      <footer className='w-full p-6 text-center text-[11px] font-medium text-text-sub '>
-        <p>This site is clone by Nguyen Viet</p>
-        <p>
-          My Github:{' '}
-          <Link className='underline' href='https://github.com/nguyenviet02'>
-            https://github.com/nguyenviet02
-          </Link>
-        </p>
-      </footer>
-    </main>
+    </section>
   );
 };
 
