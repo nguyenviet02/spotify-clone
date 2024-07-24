@@ -20,6 +20,17 @@ export type Scalars = {
   Date: { input: any; output: any };
 };
 
+export type CheckExistUser = {
+  __typename?: 'CheckExistUser';
+  email?: Maybe<Scalars['Boolean']['output']>;
+  phoneNumber?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type CheckExistUserInput = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  phoneNumber?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum Gender {
   Female = 'FEMALE',
   Male = 'MALE',
@@ -30,8 +41,13 @@ export enum Gender {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  user_checkExistUser?: Maybe<CheckExistUser>;
   user_login?: Maybe<UserAuth>;
   user_register?: Maybe<UserAuth>;
+};
+
+export type MutationUser_CheckExistUserArgs = {
+  input?: InputMaybe<CheckExistUserInput>;
 };
 
 export type MutationUser_LoginArgs = {

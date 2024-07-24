@@ -27,3 +27,10 @@ mutation User_login($input: UserLoginInput) {
     token
   }
 }
+
+mutation User_checkExistUser($input: CheckExistUserInput) {
+  user_checkExistUser(input: $input) {
+    email
+    phoneNumber
+  }
+}

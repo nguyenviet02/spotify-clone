@@ -40,6 +40,12 @@ export type User_LoginMutationVariables = Types.Exact<{
 
 export type User_LoginMutation = { __typename?: 'Mutation'; user_login?: { __typename?: 'UserAuth'; refreshToken?: string | null; token?: string | null } | null };
 
+export type User_CheckExistUserMutationVariables = Types.Exact<{
+  input?: Types.InputMaybe<Types.CheckExistUserInput>;
+}>;
+
+export type User_CheckExistUserMutation = { __typename?: 'Mutation'; user_checkExistUser?: { __typename?: 'CheckExistUser'; email?: boolean | null; phoneNumber?: boolean | null } | null };
+
 export const MeDocument = gql`
   query me {
     user_me {
@@ -157,3 +163,37 @@ export function useUser_LoginMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type User_LoginMutationHookResult = ReturnType<typeof useUser_LoginMutation>;
 export type User_LoginMutationResult = Apollo.MutationResult<User_LoginMutation>;
 export type User_LoginMutationOptions = Apollo.BaseMutationOptions<User_LoginMutation, User_LoginMutationVariables>;
+export const User_CheckExistUserDocument = gql`
+  mutation User_checkExistUser($input: CheckExistUserInput) {
+    user_checkExistUser(input: $input) {
+      email
+      phoneNumber
+    }
+  }
+`;
+export type User_CheckExistUserMutationFn = Apollo.MutationFunction<User_CheckExistUserMutation, User_CheckExistUserMutationVariables>;
+
+/**
+ * __useUser_CheckExistUserMutation__
+ *
+ * To run a mutation, you first call `useUser_CheckExistUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUser_CheckExistUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userCheckExistUserMutation, { data, loading, error }] = useUser_CheckExistUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUser_CheckExistUserMutation(baseOptions?: Apollo.MutationHookOptions<User_CheckExistUserMutation, User_CheckExistUserMutationVariables>) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<User_CheckExistUserMutation, User_CheckExistUserMutationVariables>(User_CheckExistUserDocument, options);
+}
+export type User_CheckExistUserMutationHookResult = ReturnType<typeof useUser_CheckExistUserMutation>;
+export type User_CheckExistUserMutationResult = Apollo.MutationResult<User_CheckExistUserMutation>;
+export type User_CheckExistUserMutationOptions = Apollo.BaseMutationOptions<User_CheckExistUserMutation, User_CheckExistUserMutationVariables>;
