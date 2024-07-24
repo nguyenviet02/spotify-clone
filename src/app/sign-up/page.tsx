@@ -44,7 +44,7 @@ const SignUpPage = (props: Props) => {
   };
 
   return (
-    <main className='w-screen h-fit min-h-screen flex flex-col justify-center  items-center bg-bg-base'>
+    <main className='w-full h-fit min-h-screen flex flex-col justify-center  items-center bg-bg-base'>
       {/* Header */}
       <header className='w-full mt-8 mb-6 flex justify-center'>
         <div className='w-10 h-10 relative'>

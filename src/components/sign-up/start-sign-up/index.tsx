@@ -6,16 +6,20 @@ import { useRecoilState } from 'recoil';
 import { stepSignUpState, dataSignUpState, TDataSignUp } from '@/lib/recoil/atoms';
 import { OtherLoginMethod } from '@/components/common';
 import { useUser_CheckExistUserMutation } from '@/lib/graphql/graphql';
+import ErrorMessage from '@/components/common/error-message';
+import { enqueueSnackbar } from 'notistack';
+import LoadingIcon from '@/components/common/loading';
 
 type Props = {};
 
 const StartSignUp = (props: Props) => {
   const [isValidEmail, setIsValidEmail] = React.useState<boolean>(true);
   const [isUserExist, setIsUserExist] = React.useState<boolean>(false);
+  const [isCallApi, setIsCallApi] = React.useState<boolean>(false);
   const [stepSignUp, setStepSignUp] = useRecoilState(stepSignUpState);
   const [dataSignUp, setDataSignUp] = useRecoilState<TDataSignUp>(dataSignUpState);
 
-  const [checkExistUserMutation] = useUser_CheckExistUserMutation();
+  const [checkExistUserMutation, checkExistUserEffect] = useUser_CheckExistUserMutation();
   const checkExistUser = async () => {
     try {
       const res = await checkExistUserMutation({
@@ -26,10 +30,13 @@ const StartSignUp = (props: Props) => {
         }
       });
       if (res?.data) {
-        setIsUserExist(res?.data?.user_checkExistUser?.email || false);
+        setIsUserExist(res?.data?.user_checkExistUser?.email as boolean);
+        setIsCallApi(true);
       }
     } catch (error) {
-      setIsUserExist(false);
+      enqueueSnackbar('Đã có lỗi xảy ra, vui lòng thử lại sau!', { variant: 'error' });
+      setIsValidEmail(false);
+      setIsUserExist(true);
     }
   };
 
@@ -37,21 +44,18 @@ const StartSignUp = (props: Props) => {
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return regex.test(email);
   };
+
   const onClickContinue = async () => {
-    if (!dataSignUp?.email) {
-      setIsValidEmail(false);
-      return;
-    }
-    if (!isValidEmail) {
-      return;
-    }
-    await checkExistUser();
-    if (isUserExist) {
+    if (!dataSignUp?.email || !isValidEmail || isUserExist || !isCallApi) {
       return;
     }
     setStepSignUp(stepSignUp + 1);
   };
+
   const onChangeEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isCallApi) {
+      setIsCallApi(false);
+    }
     setDataSignUp({
       ...dataSignUp,
       email: e.target.value
@@ -59,13 +63,22 @@ const StartSignUp = (props: Props) => {
   };
 
   const onBlurEmailInput = async () => {
-    if (dataSignUp?.email) {
-      setIsValidEmail(checkValidEmail(dataSignUp?.email));
+    if (!dataSignUp?.email) {
+      setIsValidEmail(false);
+      return;
     }
-    if (isValidEmail) {
-      await checkExistUser();
+    const validEmail = checkValidEmail(dataSignUp?.email);
+    if (!validEmail) {
+      setIsValidEmail(false);
+      return;
     }
+    setIsValidEmail(true);
+    await checkExistUser();
   };
+
+  useEffect(() => {
+    setIsCallApi(true);
+  }, [stepSignUp]);
 
   return (
     <div className='w-full h-full'>
@@ -88,29 +101,20 @@ const StartSignUp = (props: Props) => {
         </div>
       </form>
       {/* Error message */}
-      {!isValidEmail && (
-        <div className='w-full flex gap-1 mt-2'>
-          <div className='w-4 h-4 relative shrink-0'>
-            <Image src='/icons/warn-icon.svg' alt='SPOTIFY_ICON' fill className='filter-text-negative' />
-          </div>
-          <p className='text-[12px] font-medium text-text-negative'>Email này không hợp lệ. Hãy đảm bảo rằng email được nhập dưới dạng example@email.com</p>
-        </div>
-      )}
-      {isUserExist && (
-        <div className='w-full flex gap-1 mt-2'>
-          <div className='w-4 h-4 relative shrink-0'>
-            <Image src='/icons/warn-icon.svg' alt='SPOTIFY_ICON' fill className='filter-text-negative' />
-          </div>
-          <p className='text-[12px] font-medium text-text-negative'>Email này đã được đăng ký, vui lòng thử email khác!</p>
-        </div>
-      )}
+      <ErrorMessage error='Email này không hợp lệ. Hãy đảm bảo rằng email được nhập dưới dạng example@email.com' showError={!isValidEmail} />
+      <ErrorMessage error='Email này đã được đăng ký, vui lòng thử email khác!' showError={isUserExist} />
       <div className='w-full mt-2'>
         <Link href='/sign-up/phone' className='text-[14px] font-medium text-text-bright-accent underline'>
           Dùng số điện thoại.
         </Link>
       </div>
-      <button onClick={onClickContinue} className='btn-primary h-12 w-full rounded-full flex justify-center items-center text-sm font-bold mt-5 py-2 px-4'>
-        <span>Tiếp theo</span>
+      <button
+        disabled={!dataSignUp?.email || !isValidEmail || isUserExist || !isCallApi}
+        onClick={onClickContinue}
+        className='btn-primary h-12 w-full rounded-full flex justify-center items-center gap-2 text-sm font-bold mt-5 py-2 px-4 disabled:cursor-not-allowed'
+      >
+        <LoadingIcon width={4} height={4} isLoading={checkExistUserEffect?.loading} />
+        <span>{checkExistUserEffect?.loading ? 'Đang kiểm tra email...' : 'Tiếp tục'}</span>
       </button>
       <Divider className='w-full before:border-t-essential-sub after:border-t-essential-sub text-text-base-light text-[12px] font-medium mt-8'>hoặc</Divider>
       {/* Other login method */}
