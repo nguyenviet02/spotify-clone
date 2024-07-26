@@ -77,7 +77,7 @@ const LeftSideBar = (props: Props) => {
           <div className='w-6 h-6 relative'>
             <Image src='/icons/spotify-icon.svg' alt='SPOTIFY_ICON' fill></Image>
           </div>
-          <h1 className='text-sm font-bold text-text-base-light'>Spotify</h1>
+          <h1 className='text-base font-bold text-text-base-light'>Spotify</h1>
         </Link>
         <div className='w-full flex flex-col px-3 py-2'>
           <Link href='/' className='flex items-center gap-5 px-3 py-1 h-10 box-content cursor-pointer'>
@@ -108,7 +108,7 @@ const LeftSideBar = (props: Props) => {
       {/* ======Library Section====== */}
       <div className='w-full bg-bg-base rounded-lg min-h-0 flex-1 flex flex-col justify-between max-h-full'>
         <div className='w-full flex flex-col min-h-0 flex-1'>
-          <div className='flex justify-between items-center w-full px-4 py-2 shrink-0'>
+          <div className='flex justify-between items-center w-full px-4 py-2 shrink-0 mb-4'>
             <div className='flex items-center gap-3 px-2 py-1 h-10 group cursor-pointer'>
               <div className='w-6 h-6 relative '>
                 <Image src='/icons/playlist-icon.svg' alt='SPOTIFY_ICON' fill className='icon-sub-to-white group-hover:filter-white'></Image>
