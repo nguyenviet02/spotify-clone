@@ -1,8 +1,18 @@
 'use client';
 
-import { useMeQuery } from '@/lib/graphql/graphql';
+import React from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-export default function Home() {
-  const me = useMeQuery();
-  return <h1 className='text-text-base-light'>{me?.data?.user_me?.displayName}</h1>;
-}
+type Props = {};
+
+const Home = (props: Props) => {
+  const router = useRouter();
+  return (
+    <main className='h-fit z-main-content'>
+      <p>lorem2000</p>
+    </main>
+  );
+};
+
+export default Home;

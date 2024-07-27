@@ -1,11 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import 'overlayscrollbars/overlayscrollbars.css';
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --background-base: #121212;
+  --background-noise: url('/images/bg-noise.svg');
 }
 
 @media (prefers-color-scheme: dark) {
@@ -67,6 +69,7 @@
 
   /* width */
   .custom-scrollbar::-webkit-scrollbar {
+    position: absolute;
     width: 10px;
   }
 
@@ -103,5 +106,20 @@
 
   .bg-for-login {
     background: linear-gradient(rgba(255, 255, 255, 0.1) 0%, rgb(0, 0, 0) 100%);
+  }
+
+  .os-theme-spotify.os-scrollbar {
+    --os-size: 12px;
+    --os-handle-min-size: 30px;
+    --os-handle-bg: hsla(0, 0%, 100%, 0.3);
+    --os-handle-bg-hover: hsla(0, 0%, 100%, 0.5);
+    --os-handle-bg-active: hsla(0, 0%, 100%, 0.7);
+    -webkit-app-region: no-drag;
+    -webkit-transition:
+      opacity 0.2s ease 0ms,
+      visibility 0.2s ease;
+    transition:
+      opacity 0.2s ease 0ms,
+      visibility 0.2s ease;
   }
 }

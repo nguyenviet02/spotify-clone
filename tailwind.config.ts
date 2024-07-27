@@ -5,7 +5,8 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        'bg-login': 'linear-gradient(rgba(255, 255, 255, 0.1) 0%, rgb(0, 0, 0) 100%)'
+        'bg-login': 'linear-gradient(rgba(255, 255, 255, 0.1) 0%, rgb(0, 0, 0) 100%)',
+        'content-linear': 'linear-gradient(rgba(0, 0, 0, 0.6) 0, var(--background-base) 100%), var(--background-noise)'
       },
       colors: {
         'bg-base': '#121212',
@@ -18,6 +19,7 @@ const config: Config = {
         'bg-bright-accent': '#1ed760',
         'bg-bright-accent-hover': '#1fdf64',
         'bg-tinted-base': '#232323',
+        'bg-header-home': '#101010',
         'text-base-light': '#fff',
         'text-base-dark': '#000',
         'text-sub': '#a7a7a7',
@@ -33,6 +35,18 @@ const config: Config = {
       },
       width: {
         '324': '81rem'
+      },
+      height: {
+        'header-top-bar': '4rem',
+        'bg-content-linear': '332px'
+      },
+      padding: {
+        'content-spacing': 'clamp(16px,16px + (100vw - 420*1px - 420*1px - 600px)/424*8,24px)'
+      },
+      zIndex: {
+        'header-top-bar': '1',
+        'main-content': 'auto',
+        'scroll-bar': '2' // 1 + 1
       }
     }
   },
