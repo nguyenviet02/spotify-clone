@@ -34,7 +34,6 @@ const Policy = (props: Props) => {
   };
 
   const submitForm = async () => {
-    console.log('☠️ ~ Policy ~ dataSignUp:', dataSignUp);
     try {
       const res = await registerUserMutation({
         variables: {

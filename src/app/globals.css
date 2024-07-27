@@ -8,6 +8,7 @@
   --background-end-rgb: 255, 255, 255;
   --background-base: #121212;
   --background-noise: url('/images/bg-noise.svg');
+  --min-column-width: 210px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,6 +16,12 @@
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@media screen and (max-width: 1650px) {
+  :root {
+    --min-column-width: 160px;
   }
 }
 
@@ -59,8 +66,8 @@
   }
 
   .btn-secondary {
-    @apply w-fit min-h-8 px-4 py-1 rounded-full bg-bg-white text-text-base-dark cursor-pointer font-bold text-[12px];
     transition: all 0.03s ease-in-out;
+    @apply w-fit min-h-8 px-4 py-1 rounded-full bg-bg-white text-text-base-dark cursor-pointer font-bold text-[12px];
   }
 
   .btn-secondary:hover {
@@ -114,12 +121,18 @@
     --os-handle-bg: hsla(0, 0%, 100%, 0.3);
     --os-handle-bg-hover: hsla(0, 0%, 100%, 0.5);
     --os-handle-bg-active: hsla(0, 0%, 100%, 0.7);
-    -webkit-app-region: no-drag;
     -webkit-transition:
       opacity 0.2s ease 0ms,
       visibility 0.2s ease;
     transition:
       opacity 0.2s ease 0ms,
       visibility 0.2s ease;
+    -webkit-app-region: no-drag;
+  }
+
+  .listCard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--min-column-width), 1fr));
+    grid-template-rows: repeat(1, minmax(0, 1fr));
   }
 }

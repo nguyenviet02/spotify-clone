@@ -23,6 +23,19 @@ const defaultDataSignUp: TDataSignUp = {
   shareData: false
 };
 
+export type TNumberOfColumnInGrid = {
+  column: number;
+};
+
+const defaultNumberOfColumnInGrid: TNumberOfColumnInGrid = {
+  column: 0
+};
+
+export const numberOfColumnInGridState = atom({
+  key: 'numberOfColumnInGridState',
+  default: defaultNumberOfColumnInGrid
+});
+
 export const stepSignUpState = atom({
   key: 'stepSignUpState',
   default: 0
