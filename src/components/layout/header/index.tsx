@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type Props = {};
 
@@ -22,8 +23,12 @@ const Header = (props: Props) => {
           </button>
         </div>
         <div className='h-full flex items-center'>
-          <button className='btn-secondary bg-transparent text-text-base-light text-[14px] h-12 px-8'>Đăng ký</button>
-          <button className='btn-secondary text-[14px] h-12 px-8'>Đăng nhập</button>
+          <button className='btn-secondary bg-transparent text-text-base-light text-[14px] h-12 px-8'>
+            <Link href='/sign-up'>Đăng ký</Link>
+          </button>
+          <button className='btn-secondary text-[14px] h-12 px-8'>
+						<Link href='/login'>Đăng nhập</Link>
+					</button>
         </div>
       </div>
     </header>
