@@ -7,12 +7,27 @@ import LeftSideBar from '../left-side-bar';
 import Header from '../header';
 import Footer from '../footer';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
+import { useMeLazyQuery } from '@/lib/graphql/graphql';
+import { useRecoilState } from 'recoil';
+import { dataUserState, defaultDataUser } from '@/lib/recoil/atoms';
 
 type Props = {
   children: React.ReactNode;
 };
 
 const Main = ({ children }: Props) => {
+  const [userDataState, setUserDataState] = useRecoilState(dataUserState);
+  const [callMeQuery, dataMeQuery] = useMeLazyQuery();
+  useEffect(() => {
+    callMeQuery();
+  }, [callMeQuery, userDataState?._id]);
+  useEffect(() => {
+    if (!dataMeQuery?.data?.user_me?._id) {
+      setUserDataState(defaultDataUser);
+      return;
+    }
+    setUserDataState(dataMeQuery?.data?.user_me);
+  }, [dataMeQuery.data, setUserDataState]);
   return (
     <main className='bg-black h-screen max-h-screen max-w-screen p-2 flex flex-col gap-2'>
       <Split gutterSize={8} minSize={280} maxSize={[420, Infinity]} expandToMin snapOffset={0} className='flex h-full min-h-0 flex-1 w-full'>

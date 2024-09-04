@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { Gender } from '../graphql/generated/types';
+import { Gender, User } from '../graphql/generated/types';
 
 export type TDataSignUp = {
   displayName: string;
@@ -12,7 +12,11 @@ export type TDataSignUp = {
   shareData: boolean;
 };
 
-const defaultDataSignUp: TDataSignUp = {
+export type TNumberOfColumnInGrid = {
+  column: number;
+};
+
+export const defaultDataSignUp: TDataSignUp = {
   email: '',
   phoneNumber: '',
   password: '',
@@ -23,12 +27,23 @@ const defaultDataSignUp: TDataSignUp = {
   shareData: false
 };
 
-export type TNumberOfColumnInGrid = {
-  column: number;
+export const defaultNumberOfColumnInGrid: TNumberOfColumnInGrid = {
+  column: 0
 };
 
-const defaultNumberOfColumnInGrid: TNumberOfColumnInGrid = {
-  column: 0
+export const defaultDataUser: User = {
+  __typename: 'User',
+  _id: '',
+  displayName: '',
+  email: '',
+  phoneNumber: '',
+  password: '',
+  dateOfBirth: null,
+  gender: Gender.Male,
+  notGetMarketingMessage: false,
+  shareData: false,
+  playlists: [],
+  likedSongs: []
 };
 
 export const numberOfColumnInGridState = atom({
@@ -44,4 +59,9 @@ export const stepSignUpState = atom({
 export const dataSignUpState = atom({
   key: 'dataSignUpState',
   default: defaultDataSignUp
+});
+
+export const dataUserState = atom({
+  key: 'dataUserState',
+  default: defaultDataUser
 });

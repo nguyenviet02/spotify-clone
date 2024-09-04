@@ -67,7 +67,7 @@
 
   .btn-secondary {
     transition: all 0.03s ease-in-out;
-    @apply w-fit min-h-8 px-4 py-1 rounded-full bg-bg-white text-text-base-dark cursor-pointer font-bold text-[12px];
+    @apply w-fit min-h-8 px-4 py-1 flex justify-center items-center rounded-full bg-bg-white text-text-base-dark cursor-pointer font-bold text-[12px];
   }
 
   .btn-secondary:hover {
